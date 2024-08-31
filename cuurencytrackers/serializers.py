@@ -15,3 +15,6 @@ class DailyReturnSerializer(serializers.Serializer):
    date = serializers.DateField()
    daily_return = serializers.FloatField()
 
+class RSISerializer(serializers.Serializer):
+   date = serializers.DateField()
+   rsi = serializers.FloatField()
