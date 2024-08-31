@@ -11,3 +11,7 @@ class HistoricalPriceSerializer(serializers.ModelSerializer):
       model = HistoricalPrice
       fields = '__all__'
 
+class DailyReturnSerializer(serializers.Serializer):
+   date = serializers.DateField()
+   daily_return = serializers.FloatField()
+
