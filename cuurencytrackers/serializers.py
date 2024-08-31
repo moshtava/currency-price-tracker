@@ -6,3 +6,8 @@ class CryptocurrencySerializer(serializers.ModelSerializer):
       model = Cryptocurrency
       fields = '__all__'
 
+class HistoricalPriceSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = HistoricalPrice
+      fields = '__all__'
+
