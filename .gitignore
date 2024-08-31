@@ -1,0 +1,18 @@
+**/__pycache__
+.pytest_cache
+#venv
+venv
+
+
+.coverage
+
+# Log
+app.log
+
+db.sqlite3
+
+# Ignore all files in currencytrackers/migrations/
+currencytrackers/migrations/*
+
+# But do not ignore __init__.py
+!currencytrackers/migrations/__init__.py
