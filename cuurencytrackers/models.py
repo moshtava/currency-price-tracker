@@ -11,7 +11,7 @@ class Cryptocurrency(models.Model):
       indexes = [models.Index(fields=['name']),]
 
 class HistoricalPrice(models.Model):
-   cryptocurrency = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE)
+   cryptocurrency = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE, related_name='historical_prices')
    date = models.DateField()
    price = models.DecimalField(max_digits=20, decimal_places=10)
    
