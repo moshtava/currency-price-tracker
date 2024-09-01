@@ -24,3 +24,15 @@ class HistoricalPriceListView(generics.ListAPIView):
    def get_queryset(self):
       name = self.kwargs['name']
       return HistoricalPrice.objects.filter(cryptocurrency__name=name)
+
+class HistoricalPriceRangeView(generics.ListAPIView):
+   serializer_class = CryptocurrencyHistoricalPriceSerializer
+
+   def get_queryset(self):
+      name = self.request.query_params.get('name')
+      from_date = self.request.query_params.get('from_date')
+      to_date = self.request.query_params.get('to_date')
+      return HistoricalPrice.objects.filter(
+      cryptocurrency__name=name,
+      date__range=[from_date, to_date]
+      )
