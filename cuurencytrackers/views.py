@@ -1,8 +1,10 @@
+from django.http import HttpResponse
 from rest_framework import generics
 from .models import Cryptocurrency, HistoricalPrice
 from .serializers import CryptocurrencySerializer, CryptocurrencyHistoricalPriceSerializer, DailyReturnSerializer, RSISerializer
 from rest_framework.response import Response
 import numpy as np
+import logging
 
 class CryptocurrencyListView(generics.ListAPIView):
    queryset = Cryptocurrency.objects.all()
@@ -108,4 +110,13 @@ class RSIView(generics.ListAPIView):
       data = [{'date': queryset[i].date, 'rsi': rsi[i]} for i in range(len(rsi))]
       serializer = self.get_serializer(data, many=True)
       return Response(serializer.data)
-   
+
+logger = logging.getLogger(__name__)
+
+def my_view(request):
+   logger.debug('This is a debug message')
+   logger.info('This is an info message')
+   logger.warning('This is a warning message')
+   logger.error('This is an error message')
+   logger.critical('This is a critical message')
+   return HttpResponse('Logging test')   
