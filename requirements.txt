@@ -1,0 +1,11 @@
+numpy 
+Django
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+pillow
+django-filter
+markdown
+coreapi
+drf-spectacular
+python-dotenv
