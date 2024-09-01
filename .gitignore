@@ -16,3 +16,5 @@ cuurencytrackers/migrations/*
 
 # But do not ignore __init__.py
 !cuurencytrackers/migrations/__init__.py
+
+debug.log
