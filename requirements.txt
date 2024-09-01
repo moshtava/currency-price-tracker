@@ -8,3 +8,4 @@ markdown
 coreapi
 drf-spectacular
 python-dotenv
+numpy 
