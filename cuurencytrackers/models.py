@@ -12,7 +12,7 @@ class Cryptocurrency(models.Model):
 
 class HistoricalPrice(models.Model):
    cryptocurrency = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE)
-   rate = models.DateField()
+   date = models.DateField()
    price = models.DecimalField(max_digits=20, decimal_places=10)
    
    class Meta:
