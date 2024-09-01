@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Cryptocurrency
-from .serializers import CryptocurrencySerializer
+from .models import Cryptocurrency, HistoricalPrice
+from .serializers import CryptocurrencySerializer, HistoricalPriceOfSpecificCryptocurrencySerializer
 
 class CryptocurrencyListView(generics.ListAPIView):
    queryset = Cryptocurrency.objects.all()
@@ -17,3 +17,10 @@ class CryptocurrencyDetailByNameView(generics.RetrieveAPIView):
    def get_queryset(self):
       name = self.kwargs['name']
       return Cryptocurrency.objects.filter(name=name)   
+
+class HistoricalPriceListView(generics.ListAPIView):
+   serializer_class = HistoricalPriceOfSpecificCryptocurrencySerializer
+   
+   def get_queryset(self):
+      name = self.kwargs['name']
+      return HistoricalPrice.objects.filter(cryptocurrency__name=name)
