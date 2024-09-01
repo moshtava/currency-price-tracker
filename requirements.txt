@@ -1,3 +1,4 @@
+numpy 
 Django
 djangorestframework
 djangorestframework-simplejwt
@@ -8,4 +9,3 @@ markdown
 coreapi
 drf-spectacular
 python-dotenv
-numpy 
