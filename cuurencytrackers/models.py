@@ -16,7 +16,4 @@ class HistoricalPrice(models.Model):
    price = models.DecimalField(max_digits=20, decimal_places=10)
    
    class Meta:
-      unique_together = ('cryptocurrency', 'date')
-      indexes = [
-      models.Index(fields=['cryptocurrency', 'date']),
-      ]
+      unique_together = ('cryptocurrency', 'date')   
