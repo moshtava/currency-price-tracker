@@ -18,3 +18,8 @@ class DailyReturnSerializer(serializers.Serializer):
 class RSISerializer(serializers.Serializer):
    date = serializers.DateField()
    rsi = serializers.FloatField()
+
+class HistoricalPriceOfSpecificCryptocurrencySerializer(serializers.ModelSerializer):
+   class Meta:
+      model = HistoricalPrice
+      fields = ['date', 'price']
