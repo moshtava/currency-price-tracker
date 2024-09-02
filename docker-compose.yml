@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    image: dockerfile
+    container_name: currency-price-tracker
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/currency-price-tracker   
+    depends_on:
+      - postgres_currency_price_tracker 
+
+  postgres_currency_price_tracker:
+    image: postgres
+    container_name: postgres_currency_price_tracker
+    expose:
+      - 5432    
+    environment:
+      - POSTGRES_DB=crypto_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
