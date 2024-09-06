@@ -82,7 +82,7 @@ DATABASES = {
 'NAME': 'crypto_db',
 'USER': 'postgres',
 'PASSWORD': 'password',
-'HOST': 'postgres_currency_price_tracker',  
+'HOST': 'localhost',  
 'PORT': '5432',
 }
 }

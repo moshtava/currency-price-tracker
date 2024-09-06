@@ -1,4 +1,5 @@
 numpy 
+pandas
 Django
 djangorestframework
 djangorestframework-simplejwt
@@ -10,3 +11,4 @@ coreapi
 drf-spectacular
 python-dotenv
 psycopg2-binary
+sqlalchemy

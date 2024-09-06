@@ -1,6 +1,6 @@
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from .views import DailyReturnView, RSIView
+from .views import DailyReturnView, GenerateDataView, InsertDataView, RSIView
 from .views import CryptocurrencyListView, CryptocurrencyDetailByNameView, HistoricalPriceListView, HistoricalPriceRangeView, DailyReturnView
 
 urlpatterns = [
@@ -14,4 +14,8 @@ path('cryptocurrencies/<str:name>/historical-prices/', HistoricalPriceListView.a
 path('historical-prices/', HistoricalPriceRangeView.as_view(), name='historical-price-range'),
 path('daily-returns/', DailyReturnView.as_view(), name='daily-returns'),
 path('rsi/', RSIView.as_view(), name='rsi'),
+]
+urlpatterns += [
+path('generate_data/', GenerateDataView.as_view(), name='generate_data'),
+path('insert_data/', InsertDataView.as_view(), name='insert_data'),
 ]

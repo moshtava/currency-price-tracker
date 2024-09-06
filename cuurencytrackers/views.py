@@ -5,15 +5,68 @@ from .serializers import CryptocurrencySerializer, CryptocurrencyHistoricalPrice
 from rest_framework.response import Response
 import numpy as np
 import logging
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+import pandas as pd
+import numpy as np
+from .models import Cryptocurrency, HistoricalPrice
+from .serializers import CryptocurrencySerializer, HistoricalPriceSerializer
 
+class GenerateDataView(APIView):
+   def get(self, request):
+      date_range = pd.date_range(start='2023-01-01', end='2024-02-02')
+      cryptocurrencies = [
+      {'name': 'Bitcoin', 'symbol': 'BTC', 'market_cap': 600000000000, 'price': 50000},
+      {'name': 'Ethereum', 'symbol': 'ETH', 'market_cap': 250000000000, 'price': 4000},
+      {'name': 'Ripple', 'symbol': 'XRP', 'market_cap': 50000000000, 'price': 1}
+      ]
+      historical_data = []
+      for crypto in cryptocurrencies:
+         for date in date_range:
+            price = np.random.uniform(low=crypto['price'] * 0.8, high=crypto['price'] * 1.2)
+            historical_data.append({
+            'cryptocurrency': crypto['name'],
+            'date': date,
+            'price': round(price, 10)
+            })
+      crypto_df = pd.DataFrame(cryptocurrencies)
+      historical_df = pd.DataFrame(historical_data)
+      crypto_df.to_csv('./sample_cryptocurrencies.csv', index=False)
+      historical_df.to_csv('./sample_historical_prices.csv', index=False)
+      return Response({"message": "Sample data generated and saved to 'sample_cryptocurrencies.csv' and 'sample_historical_prices.csv'."})
+
+class InsertDataView(APIView):
+   def get(self, request):
+      crypto_csv_path = './sample_cryptocurrencies.csv'
+      historical_csv_path = './sample_historical_prices.csv'
+      crypto_data = pd.read_csv(crypto_csv_path)
+      historical_data = pd.read_csv(historical_csv_path)
+      for _, row in crypto_data.iterrows():
+         crypto, created = Cryptocurrency.objects.get_or_create(
+         name=row['name'],
+         symbol=row['symbol'],
+         defaults={'market_cap': row['market_cap'], 'price': row['price']}
+         )
+      for _, row in historical_data.iterrows():
+         crypto = Cryptocurrency.objects.get(name=row['cryptocurrency'])
+         HistoricalPrice.objects.create(
+         cryptocurrency=crypto,
+         date=row['date'],
+         price=row['price']
+         )
+      return Response({"message": "Data ingestion completed successfully."})
+   
 logger = logging.getLogger(__name__)
 
 class CryptocurrencyListView(generics.ListAPIView):
-   queryset = Cryptocurrency.objects.all()
    serializer_class = CryptocurrencySerializer
+
+   def get_queryset(self):
+      logger.info("Listing the first 10 cryptocurrencies")
+      return Cryptocurrency.objects.all()[:10]
    
    def list(self, request, *args, **kwargs):
-      logger.info("Listing all cryptocurrencies")
       return super().list(request, *args, **kwargs)
 
 class CryptocurrencyDetailView(generics.RetrieveAPIView):
@@ -123,10 +176,3 @@ class RSIView(generics.ListAPIView):
       serializer = self.get_serializer(data, many=True)
       return Response(serializer.data)
    
-def my_view(request):
-   logger.debug('This is a debug message')
-   logger.info('This is an info message')
-   logger.warning('This is a warning message')
-   logger.error('This is an error message')
-   logger.critical('This is a critical message')
-   return HttpResponse('Logging test')
